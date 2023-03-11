@@ -3,24 +3,27 @@ CREATE TABLE students(
     name VARCHAR(100),
     last_name VARCHAR(100),
     date_of_birth DATE, -- e.g. 1989-07-27
-    favorite_number INT, -- e.g. -1.5
-    country_of_origin CHAR(3), -- e.g. MEX, USA, CAN
-    active INT CHECK(active IN (TRUE, FALSE)),
+    favorite_number INT CHECK(favorite_number >= 0), -- e.g. -1.5
+    country_of_origin CHAR(3) CHECK(country_of_origin IN ('MEX', 'USA', 'CAN', 'BOL')),
+    active INT CHECK(active IN (TRUE, FALSE)) DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 -- DROP TABLE students;
+select CURRENT_TIMESTAMP; -- 2023-03-11 14:48:37
 
-INSERT INTO students (id, name, last_name, date_of_birth, favorite_number, country_of_origin, active)
-VALUES (0105123, 'Santiago', 'Arizti', '1989-07-27', -1.5, 'MEX', 1),
-       (0214020, 'andrea', 'escoto', '2000-03-10', 42,'MEX', 1),
-       (0216072,'Andrea','Perez','1999-11-18',8,'USA',1),
-       (0248440,'Raul','Estrada','1997-05-24',24,'MEX',1),
-       (0215080,'Natalia','Villalpando','2000-08-01',7,'MEX',1),
-       (0167763,'Eduardo','Díaz','1995-11-28',20,'MEX',1),
-       (0213865,'Juan Manuel','Valdivia','2000-06-04',6,'BOL',1),
-       (0214611, 'judith', 'macias' ,'1999-05-17', 15,'mex',1),
-       (0205608,'Javier','Orozco','1999-06-09',44,'MEX',1),
-       (0214177, 'Armando', 'Arroyo', '2000-12-28', 1122,'MEX', 1);
+select * from students;
+
+INSERT INTO students (id, name, last_name, date_of_birth, favorite_number, country_of_origin)
+VALUES (0105123, 'Santiago', 'Arizti', '1989-07-27', 1.5, 'MEX'),
+       (0214020, 'andrea', 'escoto', '2000-03-10', 42,'MEX'),
+       (0216072,'Andrea','Perez','1999-11-18',8,'USA'),
+       (0248440,'Raul','Estrada','1997-05-24',24,'MEX'),
+       (0215080,'Natalia','Villalpando','2000-08-01',7,'MEX'),
+       (0167763,'Eduardo','Díaz','1995-11-28',20,'MEX'),
+       (0213865,'Juan Manuel','Valdivia','2000-06-04',6,'BOL'),
+       (0214611, 'judith', 'macias' ,'1999-05-17', 15,'MEX'),
+       (0205608,'Javier','Orozco','1999-06-09',44,'MEX'),
+       (0214177, 'Armando', 'Arroyo', '2000-12-28', 1122,'MEX');
 
 CREATE TABLE classes (
     id INT PRIMARY KEY,
@@ -109,3 +112,18 @@ VALUES
 (9127, 172127, 3, 'yes'),
 (9128, 172128, 3, 'yes'),
 (9129, 172129, 3, 'yes');
+
+-- report of enrolments with student names
+SELECT
+    students.name || ' ' || students.last_name AS "Estudiante",
+    enrollments.grade AS "Calificación",
+    courses.semester AS "Semestre",
+    iif(t.degree = 'doctorate', 'Dr.', iif(t.degree = 'masters', 'Mtro.', 'Lic.'))
+        || ' ' || t.name || ' ' || t.last_name
+        AS "Profesor",
+    classes.name || ' (' || classes.school || ')' AS "Clase"
+FROM enrollments
+JOIN students ON enrollments.student_id = students.id
+JOIN courses ON enrollments.course_id = courses.id
+JOIN teachers AS t ON courses.teacher_id = t.id
+JOIN classes ON courses.class_id = classes.id;
