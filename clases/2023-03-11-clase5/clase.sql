@@ -1,4 +1,4 @@
-CREATE TABLE students(
+CREATE TABLE students( -- DROP TABLE students;
     id INT PRIMARY KEY, -- e.g. 0105123
     name VARCHAR(100),
     last_name VARCHAR(100),
@@ -8,10 +8,6 @@ CREATE TABLE students(
     active INT CHECK(active IN (TRUE, FALSE)) DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
--- DROP TABLE students;
-select CURRENT_TIMESTAMP; -- 2023-03-11 14:48:37
-
-select * from students;
 
 INSERT INTO students (id, name, last_name, date_of_birth, favorite_number, country_of_origin)
 VALUES (0105123, 'Santiago', 'Arizti', '1989-07-27', 1.5, 'MEX'),
@@ -25,7 +21,7 @@ VALUES (0105123, 'Santiago', 'Arizti', '1989-07-27', 1.5, 'MEX'),
        (0205608,'Javier','Orozco','1999-06-09',44,'MEX'),
        (0214177, 'Armando', 'Arroyo', '2000-12-28', 1122,'MEX');
 
-CREATE TABLE classes (
+CREATE TABLE classes ( -- DROP TABLE classes
     id INT PRIMARY KEY,
     name VARCHAR(100),
     school VARCHAR(100),
@@ -35,7 +31,7 @@ INSERT INTO classes (id, name, school)
 VALUES (1001, 'Big Data', 'ECID'),
        (1002, 'Auditoría de Proyectos', 'EIGP');
 
-CREATE TABLE teachers(
+CREATE TABLE teachers( -- DROP TABLE teachers
     id INT PRIMARY KEY,
     name VARCHAR(100),
     last_name VARCHAR(100),
@@ -47,23 +43,26 @@ INSERT INTO teachers (id, name, last_name, date_of_birth, degree)
 VALUES (105123, 'Santiago', 'Arizti', '1989-07-27', 'masters'),
        (101010, 'Elon', 'Musk', '1971-06-28', 'doctorate');
 
-CREATE TABLE courses (
+CREATE TABLE courses ( -- DROP TABLE courses
     id INT PRIMARY KEY,
     class_id INT,
     teacher_id INT,
     semester CHAR(6), -- e.g. 2023-2
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (teacher_id) REFERENCES teachers(id)
 );
 INSERT INTO courses (id, class_id, teacher_id, semester)
 VALUES (123, 1001, 105123, '2023-2'),
        (456, 1002, 101010, '2022-1');
 
-CREATE TABLE enrollments (
+CREATE TABLE enrollments ( -- DROP TABLE enrollments
     id INT PRIMARY KEY,
     course_id INT,
     student_id INT,
     grade INT CHECK(grade between 0 and 100), -- e.g. 95
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (course_id) REFERENCES courses(id),
+    FOREIGN KEY (student_id) REFERENCES students(id)
 );
 INSERT INTO enrollments (id, course_id, student_id, grade)
 VALUES (172121, 123, 0214020, 93),
@@ -76,12 +75,13 @@ VALUES (172121, 123, 0214020, 93),
        (172128, 123, 0205608, 93),
        (172129, 123, 0214177, 98);
 
-CREATE TABLE attendance (
+CREATE TABLE attendance ( -- DROP TABLE attendance
     id INT PRIMARY KEY,
     enrollment_id INT,
     class_nr INT, -- e.g. 1, 2, 3
     attended TEXT CHECK(attended IN ('yes', 'late', 'no')),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (enrollment_id) REFERENCES enrollments(id)
 );
 INSERT INTO attendance (id, enrollment_id, class_nr, attended)
 VALUES

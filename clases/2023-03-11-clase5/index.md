@@ -5,8 +5,8 @@ Sábado 11 de febrero de 2023, clase 5
 
 Asistencia
 
-- [ ] 0214177@up.edu.mx Arroyo Vázquez, Jorge Armando (Armando, IIN) 
-- [ ] ediazm@up.edu.mx  Díaz Medina, Eduardo (Lalo, Ext.)
+- [r] 0214177@up.edu.mx Arroyo Vázquez, Jorge Armando (Armando, IIN) 
+- [r] ediazm@up.edu.mx  Díaz Medina, Eduardo (Lalo, Ext.)
 - [ ] 0214020@up.edu.mx Escoto Aceves, María Andrea (Andrea, IID)
 - [r] 0248440@up.edu.mx Estrada Hernández, Héctor Raúl (Raúl, Ext. economía y gestión de negocios)
 - [x] 0214611@up.edu.mx Macías Álvarez, Judith (Judith, IIN)
