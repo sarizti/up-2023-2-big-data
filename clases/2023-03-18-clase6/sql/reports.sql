@@ -8,7 +8,7 @@ SELECT
         AS "Profesor",
     classes.name || ' (' || classes.school || ')' AS "Clase"
 FROM enrollments
-JOIN students ON enrollments.student_id = students.id
-JOIN courses ON enrollments.course_id = courses.id
-JOIN teachers AS t ON courses.teacher_id = t.id
-JOIN classes ON courses.class_id = classes.id;
+INNER JOIN students ON enrollments.student_id = students.id
+INNER JOIN courses ON enrollments.course_id = courses.id
+INNER JOIN teachers AS t ON courses.teacher_id = t.id
+INNER JOIN classes ON courses.class_id = classes.id;

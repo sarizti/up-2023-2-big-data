@@ -9,3 +9,8 @@ ALTER TABLE students ADD favorite_number INT CHECK(favorite_number >= 0);
 ALTER TABLE students ADD country_of_origin CHAR(3) CHECK(country_of_origin IN ('MEX', 'USA', 'CAN', 'BOL'));
 ALTER TABLE students ADD active INT CHECK(active IN (TRUE, FALSE)) DEFAULT TRUE;
 ALTER TABLE students ADD created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL;
+
+SELECT students.name, enrollments.course_id, enrollments.grade
+FROM students
+LEFT JOIN enrollments ON students.id = enrollments.student_id
+WHERE enrollments.id IS NULL;
