@@ -120,7 +120,7 @@ SELECT
     courses.semester AS "Semestre",
     iif(t.degree = 'doctorate', 'Dr.', iif(t.degree = 'masters', 'Mtro.', 'Lic.'))
         || ' ' || t.name || ' ' || t.last_name
-        AS "Profesor",
+        AS "Professor",
     classes.name || ' (' || classes.school || ')' AS "Clase"
 FROM enrollments
 JOIN students ON enrollments.student_id = students.id
