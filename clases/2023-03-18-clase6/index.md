@@ -15,3 +15,5 @@ Asistencia
 - [ ] 0211501@up.edu.mx Ramirez Gonzalez, Jose Carlos (José Carlos, IIN)
 - [x] 0213865@up.edu.mx Valdivia Mendoza, Juan Manuel (JuanMa, Ext. Industrial Ags.)
 - [x] 0215080@up.edu.mx Villalpando Chávez, Natalia (Natalia, IID)
+
+Configuraremos PyCharm para trabajar con cuadernos de Jupyter y trabajaremos con el dataset de artículos
