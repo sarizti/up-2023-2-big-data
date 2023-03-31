@@ -1,7 +1,7 @@
 Aprendizaje Automático Para Grandes Volúmenes de Datos
 ======================================================
 
-Sábado 25 de marzo de 2023, clase 5
+Sábado 25 de marzo de 2023, clase 7
 
 Asistencia
 ----------
