@@ -18,3 +18,32 @@ Asistencia
 - [ ] 0215080@up.edu.mx Villalpando Chávez, Natalia (Natalia, IID)
 
 Recordar de insistir en la encuesta de evaluación.
+
+Hacer juntos el reporte de estudiantes que les pedí.
+
+Explicar de la normalización.
+
+<https://www.youtube.com/watch?v=kyZSrcuuOf0>
+
+Mostrar el "download" de los reportes en django.
+
+Pedir que elijan un archivo csv de los del semestre pasado y hagan ingeniería inversa para hacer las tablas de
+SQL correspondientes. `gdown 1k-aEbSDXA7SvyPoHD6AjFgfo79dfmkAI`
+
+<https://drive.google.com/file/d/1k-aEbSDXA7SvyPoHD6AjFgfo79dfmkAI/view?usp=sharing>
+
+10 Fast Fingers
+---------------
+
+| ID      | Nombre      | WPM 1 | WPM 2 |
+|---------|-------------|-------|-------|
+| 0214177 | Armando     |       |       |
+| ediazm  | Lalo        | 74    |       |
+| 0214020 | Andrea E.   | 59    |       |
+| 0248440 | Raúl        | 32    |       |
+| 0214611 | Judith      |       |       |
+| 0205608 | Javier      | 32    |       |
+| 0216072 | Andrea P.   | 47    |       |
+| 0211501 | José Carlos |       |       |
+| 0213865 | JuanMa      | 50    |       |
+| 0215080 | Natalia     | 50    |       |
