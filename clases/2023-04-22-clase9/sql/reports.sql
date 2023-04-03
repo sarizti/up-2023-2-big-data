@@ -1,12 +1,13 @@
 -- direct emulation of the CSV file
 SELECT
-    tournaments.atp AS "ATP",
+    matches.id,
+    events.atp AS "ATP",
     locations.name AS "Location",
     tournaments.name AS "Tournament",
     matches.date AS "Date",
-    tournaments.series AS "Series",
-    locations.court AS "Court",
-    locations.surface AS "Surface",
+    events.series AS "Series",
+    courts.court AS "Court",
+    courts.surface AS "Surface",
     matches.round AS "Round",
     matches.best_of AS "Best of",
     winner_player.name AS "Winner",
@@ -37,9 +38,12 @@ SELECT
     loser_player.height AS "pl2_height",
     loser_player.hand AS "pl2_hand"
 FROM matches
-JOIN tournaments on matches.tournament_id=tournaments.id
-JOIN locations on tournaments.location_id=locations.id
-JOIN players_matches as winner_player_m on winner_player_m.match_id=matches.id and winner_player_m.win=TRUE
-JOIN players as winner_player on winner_player.id=winner_player_m.player_id
-JOIN players_matches as loser_player_m on loser_player_m.match_id=matches.id and winner_player_m.win=FALSE
-JOIN players as loser_player on loser_player.id=loser_player_m.player_id;
+JOIN events ON matches.event_id=events.id
+JOIN tournaments ON events.tournament_id=tournaments.id
+JOIN locations ON events.location_id=locations.id
+JOIN courts ON matches.court_id=courts.id
+JOIN players_matches AS winner_player_m ON winner_player_m.match_id=matches.id AND winner_player_m.win=TRUE
+JOIN players AS winner_player ON winner_player.id=winner_player_m.player_id
+JOIN players_matches AS loser_player_m ON loser_player_m.match_id=matches.id AND loser_player_m.win=FALSE
+JOIN players AS loser_player ON loser_player.id=loser_player_m.player_id
+ORDER BY matches.id;
