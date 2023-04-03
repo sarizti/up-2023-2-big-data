@@ -5,15 +5,20 @@ CREATE TABLE report(
     Comment, pl1_flag, pl1_year_pro, pl1_weight, pl1_height, pl1_hand, pl2_flag, pl2_year_pro, pl2_weight, pl2_height, pl2_hand
 );
 
-DROP TABLE IF EXISTS matches;
-CREATE TABLE matches(
+DROP TABLE IF EXISTS tournaments;
+CREATE TABLE tournaments( -- the name of the tournament, not necessarily on the same location every time.
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    date DATE NOT NULL, -- 'Date' comes formatted as 26/01/2022 and needs to be converted to 2022-01-26
-    round TEXT NOT NULL, -- 'Round' e.g. '1st Round'
-    best_of INTEGER NOT NULL, -- 'Best of' e.g. 3
-    comment TEXT NOT NULL, -- 'Comment' e.g. 'completed'|'retired'
-    event_id INTEGER REFERENCES events(id) NOT NULL,
-    created_at DATE DEFAULT CURRENT_TIMESTAMP NOT NULL
+    name TEXT NOT NULL, -- 'Tournament' e.g. 'Melbourne Summer Set'
+    created_at DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CONSTRAINT name UNIQUE (name)
+);
+
+DROP TABLE IF EXISTS locations;
+CREATE TABLE locations( -- place where the tournament happened, has many courts, belongs to N tournaments
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL, -- 'Location' e.g. 'Melbourne'
+    created_at DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CONSTRAINT name UNIQUE (name)
 );
 
 DROP TABLE IF EXISTS events;
@@ -23,55 +28,44 @@ CREATE TABLE events( -- combination of tournament + location
     atp INTEGER NOT NULL, -- 'ATP' e.g. 1|2|3. looks like the number of the tournament in the year
     series TEXT NOT NULL, -- 'Series' e.g. ATP250
     tournament_id INTEGER REFERENCES tournaments(id) NOT NULL,
+    location_id INTEGER REFERENCES locations(id) NOT NULL,
     created_at DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT year_atp UNIQUE (year, atp)
 );
 
-DROP TABLE IF EXISTS event_location;
-CREATE TABLE event_location( -- there is just one case (Montpellier,Pune in 2020, APT7 where there were 2 locations per 1 event
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    event_id INTEGER REFERENCES events(id) NOT NULL,
-    location_id INTEGER REFERENCES locations(id) NOT NULL,
-    created_at DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    CONSTRAINT event_location UNIQUE (event_id, location_id)
-);
-
-DROP TABLE IF EXISTS tournaments;
-CREATE TABLE tournaments(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL, -- 'Tournament' e.g. 'Melbourne Summer Set'
-    created_at DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    CONSTRAINT name UNIQUE (name)
-);
-
-DROP TABLE IF EXISTS locations;
-CREATE TABLE locations(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL, -- 'Location' e.g. 'Melbourne'
-    created_at DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    CONSTRAINT name UNIQUE (name)
-);
-
 DROP TABLE IF EXISTS courts;
-CREATE TABLE courts(
+CREATE TABLE courts( -- each location has different types of courts
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     court TEXT NOT NULL CHECK(court in ('Indoor', 'Outdoor')), -- 'Court'
     surface TEXT NOT NULL CHECK(surface in ('Hard', 'Grass', 'Clay', 'Carpet')), -- 'Surface'
     location_id INTEGER REFERENCES locations(id),
-    created_at DATE DEFAULT CURRENT_TIMESTAMP NOT NULL
+    created_at DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CONSTRAINT court_surface_location UNIQUE (court, surface, location_id)
 );
 
 DROP TABLE IF EXISTS players;
-CREATE TABLE players(
+CREATE TABLE players( -- feeds both the Winner and Loser columns in the final report
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL, -- 'Winner'|'Loser' e.g. 'Djere L.'
-    flag TEXT NOT NULL, -- 'pl1_flag' e.g. 'KOR'|'BRA'
-    year_pro INTEGER NOT NULL, -- 'pl1_year_pro' e.g. 2015
+    flag TEXT, -- 'pl1_flag' e.g. 'KOR'|'BRA'
+    year_pro INTEGER, -- 'pl1_year_pro' e.g. 2015
     weight INTEGER, -- 'pl1_weight' e.g. 72
     height INTEGER, -- 'pl1_height' e.g.180
     hand TEXT CHECK(hand in ('Right-Handed', 'Left-Handed')), -- 'pl1_hand'
     created_at DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT name UNIQUE (name)
+);
+
+DROP TABLE IF EXISTS matches;
+CREATE TABLE matches(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    date DATE NOT NULL, -- 'Date' comes formatted as 26/01/2022 and needs to be converted to 2022-01-26
+    round TEXT NOT NULL, -- 'Round' e.g. '1st Round'
+    best_of INTEGER NOT NULL, -- 'Best of' e.g. 3
+    comment TEXT NOT NULL, -- 'Comment' e.g. 'completed'|'retired'
+    event_id INTEGER REFERENCES events(id) NOT NULL,
+    court_id INTEGER REFERENCES courts(id) NOT NULL,
+    created_at DATE DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 DROP TABLE IF EXISTS players_matches;

@@ -43,12 +43,8 @@ classDiagram
     }
     class events {
         id INT
-        tournament_id INT
-    }
-    class event_locations {
-        id INT
-        event_id INT
         location_id INT
+        tournament_id INT
     }
     class players_matches {
         id INT
@@ -61,9 +57,8 @@ classDiagram
     }
         
     
-    event_locations --> events
-    event_locations --> locations
     events --> tournaments
+    events --> locations
     matches --> events
     matches --> courts
     players_matches --> players
