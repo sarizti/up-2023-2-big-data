@@ -1,6 +1,5 @@
 -- direct emulation of the CSV file
-/*DROP VIEW IF EXISTS my_report;
-CREATE VIEW my_report AS /**/
+-- DROP VIEW IF EXISTS my_report; CREATE VIEW my_report AS
 SELECT
     matches.id,
     events.atp AS "ATP",

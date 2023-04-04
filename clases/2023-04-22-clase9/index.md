@@ -66,9 +66,3 @@ classDiagram
     players_matches_sets --> players_matches
     courts --> locations
 ```
-
-
-
-AQUÍ
-nombre, lengua, fisica, quimica, gimnasia
-"
