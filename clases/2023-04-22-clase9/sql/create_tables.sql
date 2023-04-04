@@ -73,8 +73,8 @@ CREATE INDEX matches__courts ON matches(court_id);
 DROP TABLE IF EXISTS players_matches;
 CREATE TABLE players_matches(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    new_rank INTEGER NOT NULL, -- 'WRank'|'LRank' e.g. 52
-    new_points INTEGER NOT NULL, -- 'WPts'|'LPts' e.g. 1131
+    new_rank INTEGER, -- 'WRank'|'LRank' e.g. 52
+    new_points INTEGER, -- 'WPts'|'LPts' e.g. 1131
     win INTEGER NOT NULL, -- TRUE|FALSE
     match_id INTEGER REFERENCES matches(id) NOT NULL,
     player_id INTEGER REFERENCES players(id) NOT NULL,

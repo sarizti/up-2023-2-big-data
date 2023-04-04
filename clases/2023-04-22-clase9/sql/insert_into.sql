@@ -18,11 +18,21 @@ DELETE FROM report WHERE Location = '';
 
 INSERT INTO players (name, flag, year_pro, weight, height, hand)
 SELECT DISTINCT * FROM (
-    SELECT Winner, NULLIF(pl1_flag, ''), CAST(NULLIF(pl1_year_pro, '') as INTEGER), CAST(NULLIF(pl1_weight, '') as INTEGER), CAST(NULLIF(pl1_height, '') as INTEGER), NULLIF(pl1_hand, '')
-    FROM report
+    SELECT r.Winner AS name,
+        NULLIF(r.pl1_flag, '') AS flag,
+        CAST(NULLIF(r.pl1_year_pro, '') as INTEGER) AS year_pro,
+        CAST(NULLIF(r.pl1_weight, '') as INTEGER) AS weight,
+        CAST(NULLIF(r.pl1_height, '') as INTEGER) AS height,
+        NULLIF(r.pl1_hand, '') AS hand
+    FROM report AS r
     UNION
-    SELECT Loser, NULLIF(pl2_flag, ''), CAST(NULLIF(pl2_year_pro, '') as INTEGER), CAST(NULLIF(pl2_weight, '') as INTEGER), CAST(NULLIF(pl2_height, '') as INTEGER), NULLIF(pl2_hand, '')
-    FROM report
+    SELECT r.Loser AS name,
+       NULLIF(r.pl2_flag, '') AS flag,
+       CAST(NULLIF(r.pl2_year_pro, '') as INTEGER) AS year_pro,
+       CAST(NULLIF(r.pl2_weight, '') as INTEGER) AS weight,
+       CAST(NULLIF(r.pl2_height, '') as INTEGER) AS height,
+       NULLIF(r.pl2_hand, '') AS hand
+    FROM report AS r
 ) t;
 
 INSERT INTO locations (name)
@@ -35,50 +45,50 @@ FROM report;
 
 INSERT INTO events (year, atp, series, tournament_id, location_id)
 SELECT DISTINCT
-    CAST(SUBSTR(Date, 7, 4) AS INTEGER) AS yr,
-    CAST(ATP as INTEGER) AS atp,
-    Series,
-    (SELECT id FROM tournaments WHERE name=Tournament) AS tournament_id,
-    (SELECT id FROM locations WHERE name=Location) AS location_id
-FROM report;
+    CAST(SUBSTR(r.Date, 7, 4) AS INTEGER) AS year,
+    CAST(r.ATP as INTEGER) AS atp,
+    r.Series AS series,
+    (SELECT id FROM tournaments WHERE name=r.Tournament) AS tournament_id,
+    (SELECT id FROM locations WHERE name=r.Location) AS location_id
+FROM report AS r;
 
 INSERT INTO courts (court, surface, location_id)
 SELECT DISTINCT Court, Surface,
     (SELECT id FROM locations WHERE name=Location) AS location_id
-FROM report;
+FROM report AS r;
 
 INSERT INTO matches (id, date, round, best_of, comment, event_id, court_id)
 SELECT id,
-    SUBSTR(Date, 7, 4) || '-' || SUBSTR(Date, 4, 2) || '-' || SUBSTR(Date, 1, 2) AS date,
-    Round AS round, CAST("Best of" AS INTEGER) AS best_of, Comment AS comment,
+    SUBSTR(r.Date, 7, 4) || '-' || SUBSTR(r.Date, 4, 2) || '-' || SUBSTR(r.Date, 1, 2) AS date,
+    r.Round AS round, CAST(r."Best of" AS INTEGER) AS best_of, r.Comment AS comment,
     (SELECT e.id
-        FROM events e JOIN locations l on e.location_id=l.id
-        WHERE l.name=Location AND e.year=CAST(SUBSTR(Date, 7, 4) AS INTEGER) AND e.atp=CAST(ATP as INTEGER)
+        FROM events AS e
+        WHERE e.year=CAST(SUBSTR(r.Date, 7, 4) AS INTEGER) AND e.atp=CAST(r.ATP as INTEGER)
     ) AS event_id,
     (SELECT c.id
-        FROM events e JOIN locations l on e.location_id=l.id JOIN courts c on l.id=c.location_id
-        WHERE l.name=Location AND e.year=CAST(SUBSTR(Date, 7, 4) AS INTEGER) AND e.atp=CAST(ATP as INTEGER)
-        AND c.court=Court AND c.surface=Surface
+        FROM events AS e JOIN locations AS l on e.location_id=l.id JOIN courts AS c on l.id=c.location_id
+        WHERE l.name=r.Location AND e.year=CAST(SUBSTR(r.Date, 7, 4) AS INTEGER) AND e.atp=CAST(r.ATP as INTEGER)
+        AND c.court=r.Court AND c.surface=r.Surface
     ) AS court_id
-FROM report;
+FROM report AS r;
 
 INSERT INTO players_matches (new_rank, new_points, win, match_id, player_id)
 SELECT * FROM (
     SELECT
-        CAST(WRank AS INTEGER) AS new_rank,
-        CAST(WPts AS INTEGER) AS new_points,
+        CAST(NULLIF(r.WRank, '') AS INTEGER) AS new_rank,
+        CAST(NULLIF(r.WPts, '') AS INTEGER) AS new_points,
         TRUE AS win,
         id AS match_id,
-        (SELECT id FROM players WHERE name=Winner) as player_id
-    FROM report
+        (SELECT id FROM players WHERE name=r.Winner) as player_id
+    FROM report AS r
     UNION
     SELECT
-        CAST(LRank AS INTEGER) AS new_rank,
-        CAST(LPts AS INTEGER) AS new_points,
+        CAST(NULLIF(r.LRank, '') AS INTEGER) AS new_rank,
+        CAST(NULLIF(r.LPts, '') AS INTEGER) AS new_points,
         FALSE AS win,
         id AS match_id,
-        (SELECT id FROM players WHERE name=Loser) as player_id
-    FROM report
+        (SELECT id FROM players WHERE name=r.Loser) as player_id
+    FROM report AS r
 ) t;
 
 INSERT INTO players_matches_sets (players_matches_id, set_num, games)
