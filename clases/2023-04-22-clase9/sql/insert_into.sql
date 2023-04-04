@@ -102,9 +102,9 @@ SELECT m.id, 4, CAST(r.W4 AS INTEGER) FROM report r, players_matches m, players 
 UNION
 SELECT m.id, 5, CAST(r.W5 AS INTEGER) FROM report r, players_matches m, players p WHERE r.id=m.match_id AND p.id=m.player_id AND r.Winner=p.name AND r.W5<>''
 UNION
-SELECT m.id, 1, CAST(r.L1 AS INTEGER) FROM report r, players_matches m, players p WHERE r.id=m.match_id AND p.id=m.player_id AND r.Loser=p.name AND r.W1<>''
+SELECT m.id, 1, CAST(r.L1 AS INTEGER) FROM report r, players_matches m, players p WHERE r.id=m.match_id AND p.id=m.player_id AND r.Loser=p.name AND r.L1<>''
 UNION
-SELECT m.id, 2, CAST(r.L2 AS INTEGER) FROM report r, players_matches m, players p WHERE r.id=m.match_id AND p.id=m.player_id AND r.Loser=p.name AND r.W2<>''
+SELECT m.id, 2, CAST(r.L2 AS INTEGER) FROM report r, players_matches m, players p WHERE r.id=m.match_id AND p.id=m.player_id AND r.Loser=p.name AND r.L2<>''
 UNION
 SELECT m.id, 3, CAST(r.L3 AS INTEGER) FROM report r, players_matches m, players p WHERE r.id=m.match_id AND p.id=m.player_id AND r.Loser=p.name AND r.L3<>''
 UNION
