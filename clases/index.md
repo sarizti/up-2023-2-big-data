@@ -13,7 +13,7 @@ Aprendizaje Automático Para Grandes Volúmenes de Datos
 8. **2023-04-01**: repaso de los temas hasta el momento, hablar de CRUD. (nota: siguen 2 semanas de vacaciones aquí por semana santa)
 9. **2023-04-22**: hacer un CRUD html 1. php y javascript.
 10. **2023-04-29**: hacer un CRUD html 2. (continuación)
-11. **2023-05-06**: ETL (tal vez esto va antes del CRUD)
+11. **2023-05-06**: ETL (tal vez esto va antes del CRUD) (lo hicimos con tennis_data)
 12. **2023-05-13**: Hadoop, MapReduce, Spark
 13. **2023-05-20**: Grandes bases de datos Big Query, Hive?
 14. **2023-05-27**: Motores de búsqueda, ElasticSearch, Apache Solr, Indexado de archivos
