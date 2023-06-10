@@ -1,13 +1,14 @@
 Aprendizaje Automático Para Grandes Volúmenes de Datos
 ======================================================
 
-Sábado 6 de mayo de 2023, clase 11
+Sábado 13 de mayo de 2023, clase 12
 
 Bitácora
 --------
 
-- Revisar exámen de SQL en moodle
-- continuar con el CRUD y terminarlo.
+- Continuar con el CRUD de django
+- Faltan 4 clases, las últimas dos son exámen y entregga.
+- Las siguientes dos son Big Data.
 
 Asistencia
 ----------

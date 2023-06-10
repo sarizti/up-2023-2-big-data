@@ -1,13 +1,12 @@
 Aprendizaje Automático Para Grandes Volúmenes de Datos
 ======================================================
 
-Sábado 6 de mayo de 2023, clase 11
+Sábado 3 de junio de 2023, clase 15
 
 Bitácora
 --------
 
-- Revisar exámen de SQL en moodle
-- continuar con el CRUD y terminarlo.
+Exámen final y presentación de proyectos
 
 Asistencia
 ----------
@@ -19,6 +18,6 @@ Asistencia
 - [x] 0214611@up.edu.mx Macías Álvarez, Judith (Judith, IIN)
 - [x] 0205608@up.edu.mx Orozco Alarcón, Javier (Javier, IIN) 
 - [x] 0216072@up.edu.mx Perez, Andrea (Andrea, IID)
-- [x] 0211501@up.edu.mx Ramirez Gonzalez, Jose Carlos (José Carlos, IIN)
+- [ ] 0211501@up.edu.mx Ramirez Gonzalez, Jose Carlos (José Carlos, IIN)
 - [x] 0213865@up.edu.mx Valdivia Mendoza, Juan Manuel (JuanMa, Ext. Industrial Ags.)
 - [x] 0215080@up.edu.mx Villalpando Chávez, Natalia (Natalia, IID)
